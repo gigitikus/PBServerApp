@@ -1,0 +1,130 @@
+﻿@page "/"
+@layout TopNavLayout
+
+<div class="row">
+    <div class="card card-primary col-12 collapsed-card p-0 text-sm">
+        <div class="card-header">
+            <h4 class="card-title">Data Filter</h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-plus"></i>
+                    </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Bidang Kegiatan</label>
+                      <div class="select2-purple">
+                        <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                          <option>Alabama</option>
+                          <option>Alaska</option>
+                          <option>California</option>
+                          <option>Delaware</option>
+                          <option>Tennessee</option>
+                          <option>Texas</option>
+                          <option>Washington</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Ormas Sesuai Suku</label>
+                      <div class="select2-purple">
+                        <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                          <option>Alabama</option>
+                          <option>Alaska</option>
+                          <option>California</option>
+                          <option>Delaware</option>
+                          <option>Tennessee</option>
+                          <option>Texas</option>
+                          <option>Washington</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Nama Ormas</label>
+                        <input type="text" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Berbadan Hukum</label>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                          <label class="custom-control-label" for="customSwitch1">
+                              Ya / Tidak
+                          </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary">Terapkan Filter</button>
+            <button type="button" class="btn btn-warning">Bersihkan Filter</button>
+        </div>
+    </div>
+    <div class="card col-12 p-0">
+        <div class="card-body table-responsive p-0 text-sm">
+            <table id="example2" class="table table-hover text-nowarp" style="width:150%;">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Ormas</th>
+                        <th>Alamat</th>
+                        <th>Nama Pimpinan</th>
+                        <th>Nomor Terdaftar</th>
+                        <th>Bidang Kegiatan</th>
+                        <th>Keterangan</th>
+                        <th>Berbadan Hukum</th>
+                        <th>Suku</th>
+                        <th>Opsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-xs">Opsi</button>
+                                <button type="button" class="btn btn-info btn-xs dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu text-sm" role="menu">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Hapus</a>
+                                    <a class="dropdown-item" href="#">View</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <label class="text-sm">Menampilkan 1 sampai 20 dari 130 data</label>
+            <ul class="pagination pagination-sm m-0 float-right">
+                <li class="page-item"><a class="page-link" href="#">«</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">»</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.card -->
+</div>
+
+@code {
+
+}

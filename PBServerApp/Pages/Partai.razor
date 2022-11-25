@@ -1,0 +1,156 @@
+﻿@page "/partai"
+@using PBShared.DataTransferObject.Transaksi.TR_Partais.dto;
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IHttpClientFactory ClientFactory
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Gelar Partai</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item active">Partai</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">List Partai Per Hari ini tanggal : @DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-success btn-sm float-right">Tambah Partai</button>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr style="text-align:center">
+                                    <th>Kode</th>
+                                    <th>Partai Ke</th>
+                                    <th>Mulai</th>
+                                    <th>Selesai</th>
+                                    <th>Kalah Bayar Kock</th>
+                                    <th>Jumlah Kock</th>
+                                    <th>Biaya / Partai</th>
+                                    <th>Sisa</th>
+                                    <th>Lunas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var partai in partais)
+                                {
+                                    <tr>
+                                        <td>@partai.partaiCode</td>
+                                        <td style="text-align:center">@partai.partaiKe</td>
+                                        <td style="text-align:center">@partai.waktuMulai.ToString("HH:mm:ss")</td>
+                                        <td style="text-align:center">@partai.waktuSelesai.ToString("HH:mm:ss")</td>
+                                        <td style="text-align:center">@partai.kalahBayarCock</td>
+                                        <td style="text-align:center">@partai.jumlahCock</td>
+                                        <td style="text-align:right">@partai.biayaPerPartai.ToString("N0")</td>
+                                        <td style="text-align:right">@partai.sisaBiayaPerPartai.ToString("N0")</td>
+                                        <td style="text-align:center">@partai.terbayarPenuh</td>
+                                        <td style="text-align:right">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">Aksi</button>
+                                                <button type="button" class="btn btn-default btn-sm dropdown-toggle dropdown-icon"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" style>
+                                                    <a class="dropdown-item" href="#">Bayar</a>
+                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="#">View</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer clear-fix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item">
+                                <a class="page-link" href="#">«</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">»</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<TRPartai> partais = new List<TRPartai>();
+    private bool getPartaisError;
+    private bool shouldRender;
+
+    protected override bool ShouldRender() => shouldRender;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get,
+        "http://localhost:5097/api/transaction/transaction/getpartais");
+
+        request.Headers.Add("Accept", "application/vnd.github.v3+json");
+        request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
+
+        var client = ClientFactory.CreateClient();
+
+        var response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            partais = await JsonSerializer.DeserializeAsync<List<TRPartai>>(responseStream);
+        }
+        else
+        {
+            getPartaisError = true;
+        }
+
+        shouldRender = true;
+    }
+}
