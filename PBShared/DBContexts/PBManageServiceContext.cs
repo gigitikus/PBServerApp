@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PBShared.DataTransferObject;
 using PBShared.DataTransferObject.Transaksi;
 using PBShared.EntityFrameworkCore;
 using System;
@@ -16,6 +17,7 @@ namespace PBShared.DBContexts
         public virtual DbSet<TR_PartaiDetail> TR_PartaiDetail { get; set; }
         public virtual DbSet<TR_PartaiAdditionalItem> TR_PartaiAdditionalItem { get; set; }
         public virtual DbSet<TR_PartaiPemain> TR_PartaiPemain { get; set; }
+        public virtual DbSet<DT_Ormas> DT_Ormas { get; set; }
         public PBManageServiceContext(DbContextOptions<PBManageServiceContext> options)
             : base(options)
         {
@@ -35,6 +37,9 @@ namespace PBShared.DBContexts
 
             modelBuilder.Entity<TR_PartaiPemain>()
                 .HasKey(n => new { n.partaiId, n.timId, n.namaPemain });
+
+            modelBuilder.Entity<DT_Ormas>()
+                .HasKey(n => new { n.kodeOrmas });
         }
     }
 }
