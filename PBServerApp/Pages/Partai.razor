@@ -3,6 +3,7 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @inject IHttpClientFactory ClientFactory
+@inject IConfiguration Configuration
 
 <div class="content-header">
     <div class="container-fluid">
@@ -131,8 +132,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var request = new HttpRequestMessage(HttpMethod.Get,
-        "http://localhost:5097/api/transaction/transaction/getpartais");
+        var baseUrl = Configuration["App:baseUrlAPI"];
+        string urlController = baseUrl + "transaction/getpartais";
+
+        var request = new HttpRequestMessage(HttpMethod.Get, urlController);
 
         request.Headers.Add("Accept", "application/vnd.github.v3+json");
         request.Headers.Add("User-Agent", "HttpClientFactory-Sample");

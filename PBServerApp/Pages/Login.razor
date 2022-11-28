@@ -1,43 +1,50 @@
 ﻿@page "/Login"
 @layout LoginLayout
+@using PBShared.Models
+@using System.Text.Json
+@inject HttpClient HttpClient
+@inject IConfiguration Configuration
+@inject NavigationManager Navigation
+
 
 <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="#" class="h1"><b>KESBANGPOL</b></a>
-    </div>
+    <h4 class="card-header">Login</h4>
     <div class="card-body">
-      <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
+        <EditForm Model="@loginModel" OnValidSubmit="@OnValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Username</label>
+                <InputText @bind-Value="loginModel.Username" class="form-control" id="Username" />
+                <ValidationMessage For="@(() => loginModel.Username)" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText @bind-Value="loginModel.Password" type="password" id="Password" class="form-control" />
+                <ValidationMessage For="@(() => loginModel.Password)" />
+            </div>
+            <button type="submit" disabled="@loading" class="btn btn-primary">
+                @if (loading) 
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                Login
+            </button>
+            <NavLink href="account/register" class="btn btn-link">Register</NavLink>
+        </EditForm>
+    </div>
+</div>
 
-      <form action="#" method="post">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Nama Pengguna" id="username">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Kata Sandi" id="password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-        </div>
-      </form>
-      <br />
-      <p class="mb-1">
-        <a href="forgot-password.html">Lupa Password</a>
-      </p>
-      @*<p class="mb-0">
-        <a href="register.html" class="text-center">Daftar Member Baru</a>
-      </p>*@
-    </div>
-    <!-- /.card-body -->
-    </div>
+@code{
+    LoginModel loginModel = new LoginModel()
+        {
+            Username = "",
+            Password = ""
+        };
+
+    private bool loading = false;
+
+    private async Task OnValidSubmit()
+    {
+        Console.Write("onvalidsubmit");
+    }
+}
