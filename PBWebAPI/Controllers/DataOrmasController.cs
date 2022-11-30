@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PBShared.DataTransferObject;
 using PBShared.DBContexts;
 using PBShared.Models;
+using PBWebAPI.Auth;
 
 namespace PBWebAPI.Controllers
 {
@@ -19,6 +21,7 @@ namespace PBWebAPI.Controllers
             _dbContext = dbContext;
         }
        
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("CreateDataOrmas")]
         public GeneralReturnValue CreateDataOrmas(DT_Ormas input)
